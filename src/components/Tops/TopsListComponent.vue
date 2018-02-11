@@ -1,0 +1,81 @@
+<template>
+  <div>
+    <v-container v-if="!tops.length">
+      <p class="m_0">Ни одного топа не запланировано. Думаю, пора это сделать!</p>
+    </v-container>
+    <v-list v-if="tops.length">
+      <v-list-tile style="height: 74px;" class="list-tile"
+        v-for="(top, i) in tops" v-bind:key="i" @click="doSmthg">
+        <v-layout row>
+          <div style="width: 50px; margin-top: 14px;">
+            <icon color="rgb(156, 39, 176)" scale="2.7" v-if="top.type === 0" name="crosshairs"></icon>
+            <icon color="rgb(255, 82, 82)" scale="2.3" v-else-if="top.type === 1" name="exclamation-circle"></icon>
+            <icon color="rgb(255, 215, 45)" scale="2" v-else-if="top.type === 2" name="hourglass-half"></icon>
+            <icon color="rgb(25, 118, 210)" scale="2" v-else-if="top.type === 3" name="eye"></icon>
+            <icon color="rgb(76, 175, 80)" scale="2" v-else-if="top.type === 4" name="birthday-cake"></icon>
+          </div>
+          <v-flex xs9>
+            <game-tops-editing :top="top" :index="i" v-if="top.edit === true || !top._id"></game-tops-editing>
+            <game-top-row :top="top" class="w_100 pt_11" v-if="top.edit !== true && top._id"></game-top-row>
+          </v-flex>
+          <v-flex class="layout row" xs2 style="align-items: center;">
+            <v-btn fab dark ripple small color="primary" @click="onEditTop(top)"><v-icon dark>create</v-icon></v-btn>
+            <v-btn fab dark ripple small color="error" @click="onDeleteTop(top._id)"><v-icon dark>remove</v-icon></v-btn>
+          </v-flex>
+        </v-layout>
+      </v-list-tile>
+      <v-list-tile class="disp-n">
+        <v-layout row>
+          <v-flex xs10>
+            <game-tops-editing :top="newTop"></game-tops-editing>
+          </v-flex>
+          <v-flex xs2>
+          </v-flex>
+        </v-layout>
+      </v-list-tile>
+    </v-list>
+  </div>
+</template>
+
+
+<script>
+import TopEdit from './TopEditComponent.vue'
+import TopRow from './TopRowComponent.vue'
+export default {
+  name: 'TopsList',
+  components: {
+    'game-tops-editing': TopEdit,
+    'game-top-row': TopRow
+  },
+  created () {
+    const {date, periodType} = this.$route.params
+    const query = { date, periodType }
+    this.$store.dispatch('getTopsFromServer', query)
+  },
+  methods: {
+    onDeleteTop (topId) {
+      this.$store.dispatch('deleteTop', topId)
+    },
+    onEditTop (top) {
+      top.edit = true
+      this.$store.commit('changeTop', top._id, {edit: true})
+    },
+    doSmthg () {}
+  },
+  computed: {
+    tops () {
+      return this.$store.getters.tops
+    }
+  },
+  data () {
+    return {
+      newTop: {
+        name: '',
+        price: '',
+        target: null,
+        description: ''
+      }
+    }
+  }
+}
+</script>

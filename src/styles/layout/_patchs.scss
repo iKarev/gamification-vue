@@ -1,0 +1,10 @@
+.input-group--select .input-group__selections__comma {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.list-tile { 
+  height: 74px !important; 
+  & > a { height: 74px !important; }
+}

@@ -1,0 +1,90 @@
+.absolute{
+  position: absolute;
+}
+
+.disp{
+  &-n{ display: none !important; }
+  &-i{ display: inline !important; }
+  &-ib{ display: inline-block !important; }
+  &-b{ display: block !important; }
+}
+
+.no{
+  &-max-width{
+    max-width: none !important;
+  }
+}
+
+.nowrap{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.of{
+  &-h{
+    overflow: hidden;
+  }
+}
+
+.relative{
+  position: relative;
+}
+
+.visibility{
+  &-h{ visibility: hidden; }
+  &-v{ visibility: visible; }
+}
+
+.h{
+  &_25{ height: 25%; }
+  &_50{ height: 50%; }
+  &_75{ height: 75%; }
+  &_33{ height: 33.33%; }
+  &_66{ height: 66.66%; }
+  &_100{ height: 100%; }
+}
+.w{
+  &_5{ width: 5%; }
+  &_10{ width: 10%; }
+  &_15{ width: 15%; }
+  &_20{ width: 20%; }
+  &_25{ width: 25%; }
+  &_30{ width: 30%; }
+  &_33{ width: 33%; }
+  &_35{ width: 35%; }
+  &_40{ width: 40%; }
+  &_45{ width: 45%; }
+  &_50{ width: 50%; }
+  &_55{ width: 55%; }
+  &_60{ width: 60%; }
+  &_65{ width: 65%; }
+  &_66{ width: 66%; }
+  &_70{ width: 70%; }
+  &_75{ width: 75%; }
+  &_80{ width: 80%; }
+  &_85{ width: 85%; }
+  &_90{ width: 90%; }
+  &_95{ width: 95%; }
+  &_100{ width: 100%; }
+}
+
+$numbers: (0,4,8,11,12,16,20,24,28,32);
+
+@each $val in $numbers {
+  .m_#{$val} {margin: #{$val}px !important;}
+  .mh_#{$val} {margin-left: #{$val}px !important;margin-right: #{$val}px !important;}
+  .mv_#{$val} {margin-top: #{$val}px !important;margin-bottom: #{$val}px !important;}
+  .mb_#{$val} {margin-bottom: #{$val}px !important;}
+  .mt_#{$val} {margin-top: #{$val}px !important;}
+  .ml_#{$val} {margin-left: #{$val}px !important;}
+  .mr_#{$val} {margin-right: #{$val}px !important;}
+  
+  .p_#{$val} {padding: #{$val}px !important;}
+  .ph_#{$val} {padding-left: #{$val}px !important;padding-right: #{$val}px !important;}
+  .pv_#{$val} {padding-top: #{$val}px !important;padding-bottom: #{$val}px !important;}
+  .pb_#{$val} {padding-bottom: #{$val}px !important;}
+  .pt_#{$val} {padding-top: #{$val}px !important;}
+  .pl_#{$val} {padding-left: #{$val}px !important;}
+  .pr_#{$val} {padding-right: #{$val}px !important;}
+}
