@@ -81,8 +81,8 @@ export default {
     }
   }
   .date {
-    top: 0px;
-    right: 0px;
+    top: 5px;
+    right: 5px;
     line-height: 13px;
     color: lightgray;
     z-index: 1;

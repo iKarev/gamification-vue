@@ -2,7 +2,6 @@ export default {
   addTopToList (state, top) {
     state.tops[top.index] = top
     state.tops = state.tops.slice()
-    console.log(state.tops)
   },
   updateTop (state, updatedTop) {
     const index = state.tops.findIndex(top => top._id === updatedTop._id)

@@ -1,12 +1,17 @@
 <template>
   <v-card>
+    <v-toolbar color="indigo" dark>
+      <v-toolbar-title class="layout row">
+        <p class="m_0 layout row align-center">{{ targetTypeName[mainTarget.type || 0] }}</p>
+        <v-spacer></v-spacer>
+        <v-btn icon @click="backToParentTarget()" v-if="mainTarget.type > 0">
+          <v-icon>undo</v-icon>
+        </v-btn>
+      </v-toolbar-title>
+    </v-toolbar>
     <game-refresh v-if="!listDownloaded && mainTarget.type < 4" :margin="64"></game-refresh>
     <v-toolbar color="primary" dark>
-      <h4>{{ targetTypeName[mainTarget.type || 0] }}: {{ mainTarget.name }}</h4>
-      <v-spacer></v-spacer>
-      <v-btn icon @click="backToParentTarget()" v-if="mainTarget.type > 0">
-        <v-icon>undo</v-icon>
-      </v-btn>
+      <h4>{{ mainTarget.name || 'Создайте глобальную цель' }}</h4>
     </v-toolbar>
     <v-container>
       <h4 v-if="!mainTarget._id && mainTarget.type === 0">Укажите вашу основную цель</h4>
@@ -28,7 +33,7 @@
         <div slot="header">
           <h4>Дочерние {{ childrenTypesNames[mainTarget.type || 0] }}</h4>
         </div>
-        <game-targets-list @listShow="listDownloaded = $event" :parentTarget="mainTarget" :listDownloaded="listDownloaded"></game-targets-list>
+        <game-targets-list class="white" @listShow="listDownloaded = $event" :parentTarget="mainTarget" :listDownloaded="listDownloaded"></game-targets-list>
       </v-expansion-panel-content>
     </v-expansion-panel>
     </div>
@@ -75,7 +80,7 @@ export default {
   data () {
     return {
       listDownloaded: false,
-      targetTypeName: ['Глобальная цель', 'Генеральная цель', 'Долгосрочная цель', 'Краткосрочная цель', 'Ближайшая цель'],
+      targetTypeName: ['Глобальные цели', 'Генеральные цели', 'Долгосрочные цели', 'Краткосрочные цели', 'Ближайшие цели'],
       childrenTypesNames: ['генеральные цели', 'долгосрочные цели', 'краткосрочные цели', 'ближайшие цели']
     }
   },

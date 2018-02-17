@@ -19,12 +19,12 @@
           </v-tabs-bar>
           <v-tabs-items>
             <v-tabs-content :id="'tab-tops'">
-              <v-card flat>
+              <v-card flat class="container">
                 <game-tops :date="this.$route.params.date"></game-tops>
               </v-card>
             </v-tabs-content>
             <v-tabs-content :id="'tab-doings'">
-              <v-card flat>
+              <v-card flat class="container">
                 <game-doings-period :date="this.$route.params.date"></game-doings-period>
               </v-card>
             </v-tabs-content>

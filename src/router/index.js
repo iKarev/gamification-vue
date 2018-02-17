@@ -6,6 +6,7 @@ import PeriodComponent from '@/components/PeriodComponent'
 import TargetsComponent from '@/components/Targets/TargetsComponent'
 import CalendarComponent from '@/components/Calendar/CalendarComponent'
 import DoingsManagementComponent from '@/components/Doings/DoingsManagementComponent'
+import UsersManagementComponent from '@/components/Users/UsersManagementComponent'
 
 Vue.use(Router)
 
@@ -19,6 +20,10 @@ export default new Router({
       path: '/targets',
       name: 'Targets',
       component: TargetsComponent
+    }, {
+      path: '/users',
+      name: 'Users',
+      component: UsersManagementComponent
     }, {
       path: '/targets/:id',
       name: 'Targets',

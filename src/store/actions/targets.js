@@ -18,7 +18,7 @@ export default {
       commit('updateTarget', target)
     })
   },
-  getTargetsFromServer ({ commit }, data) {
+  getTargetsFromServer ({ commit, state }, data) {
     let id = ''
     let query = ``
     if (data) {
@@ -30,18 +30,28 @@ export default {
         }
       }
     }
-    axios.get(`${url}/targets${id}${query}`).then((response) => {
+    const params = {}
+    if (state.activeFriend._id) { params.friendId = state.activeFriend._id }
+    axios.get(`${url}/targets${id}${query}`, {params}).then((response) => {
       commit('setTargetsList', response.data)
     })
   },
-  getTargetFromServer ({ commit }, targetId) {
-    axios.get(`${url}/targets/${targetId}`).then((response) => {
-      if (targetId === 'main' && !response.data._id) {
+  getTargetFromServer ({ commit, state }, targetId) {
+    const params = {}
+    if (state.activeFriend._id) { params.friendId = state.activeFriend._id }
+    axios.get(`${url}/targets/${targetId}`, {params}).then(
+      (response) => {
+        if (targetId === 'main' && !response.data._id) {
+          commit('setActiveTarget', {type: 0, deadline: '', name: '', description: '', edit: true})
+        } else {
+          commit('setActiveTarget', response.data)
+        }
+      },
+      (error) => {
+        console.log(error)
         commit('setActiveTarget', {type: 0, deadline: '', name: '', description: '', edit: true})
-      } else {
-        commit('setActiveTarget', response.data)
       }
-    })
+    )
   },
   deleteTarget ({ commit }, targetId) {
     axios.delete(`${url}/targets/${targetId}`).then((response) => {

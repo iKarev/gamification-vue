@@ -5,6 +5,12 @@ export default {
   month (state) {
     return state.month
   },
+  users (state) {
+    return state.users
+  },
+  activeFriend (state) {
+    return state.activeFriend
+  },
   targets (state) {
     return state.targets
   },

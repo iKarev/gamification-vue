@@ -54,7 +54,7 @@ export default {
           }
           this.$store.dispatch('saveTargetToServer', {...this.target})
           this.$refs.targetForm.reset()
-          this.target.deadline = null
+          this.target.deadline = ''
         }
       }
     },
@@ -63,11 +63,7 @@ export default {
     },
     onDateSelected (deadline) {
       const nd = new Date()
-      if (deadline < new Date(nd.getFullYear(), nd.getMonth(), nd.getDate())) {
-        // console.log(this.$refs.targetForm)
-      } else {
-        console.log(this.$refs.targetForm)
-      }
+      if (deadline < new Date(nd.getFullYear(), nd.getMonth(), nd.getDate())) {}
     }
   }
 }

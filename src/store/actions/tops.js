@@ -19,14 +19,16 @@ export default {
       commit('updateTop', top)
     })
   },
-  getTopsFromServer ({ commit }, data) {
+  getTopsFromServer ({ commit, state }, data) {
     let query = ``
     if (data) {
       for (const i in data) {
         query += query.length < 1 ? `?${i}=${data[i]}` : `&${i}=${data[i]}`
       }
     }
-    axios.get(`${url}/tops${query}`).then((response) => {
+    const params = {}
+    if (state.activeFriend._id) { params.friendId = state.activeFriend._id }
+    axios.get(`${url}/tops${query}`, {params}).then((response) => {
       const tops = []
       if (response.data.length) {
         for (let i = 0; i < 5; i++) {

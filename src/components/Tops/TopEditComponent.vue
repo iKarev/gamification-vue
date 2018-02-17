@@ -15,7 +15,7 @@
           v-model="top.target"
           item-text="name"
           label="Выберите цель"
-          autocomplete required :rules="[v => !!v || 'Необходимо выбрать цель']"></v-select>
+          autocomplete></v-select>
       </v-flex>
       <v-flex xs8 md4 class="pl_8">
         <v-text-field label="Описание" type="text" v-model="top.description"></v-text-field>

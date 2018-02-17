@@ -23,19 +23,23 @@ export default {
       commit('updateDoing', doing)
     })
   },
-  getDoingsFromServer ({ commit }, data) {
+  getDoingsFromServer ({ commit, state }, data) {
     let query = ``
     if (data) {
       for (const i in data) {
         query += query.length < 1 ? `?${i}=${data[i]}` : `&${i}=${data[i]}`
       }
     }
-    axios.get(`${url}/doings${query}`).then((response) => {
+    const params = {}
+    if (state.activeFriend._id) { params.friendId = state.activeFriend._id }
+    axios.get(`${url}/doings${query}`, {params}).then((response) => {
       commit('setDoingsList', response.data.doings)
     })
   },
-  getPeriodDoingsFromServer ({ commit }, data) {
-    axios.get(`${url}/doings/${data.date}/type/${data.periodType}`).then((response) => {
+  getPeriodDoingsFromServer ({ commit, state }, data) {
+    const params = {}
+    if (state.activeFriend._id) { params.friendId = state.activeFriend._id }
+    axios.get(`${url}/doings/${data.date}/type/${data.periodType}`, {params}).then((response) => {
       commit('setDoingsList', response.data.doings)
     })
   },

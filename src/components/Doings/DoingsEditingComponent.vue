@@ -2,7 +2,7 @@
   <v-form class="w_100" v-model="valid" @submit.prevent ref="doingForm">
     <v-layout row>
       <v-flex xs1 class="pr_8">
-        <v-text-field label="Стоимость" type="text" v-model="doing.price"
+        <v-text-field label="Стоимость" type="number" v-model="doing.price"
           style="margin-right: 8px;" required :rules="[v => !!v || 'Укажите стоимость']"></v-text-field>
       </v-flex>
       <v-flex xs4 class="pr_8">
@@ -15,7 +15,7 @@
           v-model="doing.type"
           item-text="name"
           label="Определите тип"
-          required :rules="[v => v !== undefined || 'Опредите тип дела']"></v-select>
+          required :rules="[v => (v !== undefined && v !== null) || 'Опредите тип дела']"></v-select>
       </v-flex>
       <v-flex xs5 class="pr_8">
         <v-text-field label="Описание" type="text" v-model="doing.description"></v-text-field>
@@ -44,7 +44,6 @@ export default {
   methods: {
     onSaveDoing () {
       this.doing.periodType = this.periodType
-      console.log(this.doing)
       if (this.$refs.doingForm.validate()) {
         if (this.doing._id) {
           this.$store.dispatch('updateDoing', {...this.doing})
