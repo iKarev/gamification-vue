@@ -42,7 +42,8 @@ export const store = new Vuex.Store({
       price: null,
       name: '',
       description: '',
-      target: null
+      target: null,
+      done: null
     },
     user: {
       email: user ? user.email : '',

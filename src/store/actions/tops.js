@@ -11,10 +11,12 @@ export default {
   updateTop ({ commit }, top) {
     const data = [
       {'propName': 'name', 'value': top.name},
-      {'propName': 'deadline', 'value': top.deadline},
       {'propName': 'targetId', 'value': top.target._id},
       {'propName': 'targetName', 'value': top.target.name}
     ]
+    if (top.done !== undefined) {
+      data.push({'propName': 'done', 'value': top.done})
+    }
     axios.patch(`${url}/tops/${top._id}`, data).then((response) => {
       commit('updateTop', top)
     })

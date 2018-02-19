@@ -8,7 +8,7 @@
         {{ top.name }}
       </v-flex>
       <v-flex xs3 class="pl_8">
-        {{ top.target.name }}
+        <span v-if="top.target">{{ top.target.name }}</span>
       </v-flex>
       <v-flex xs4 class="pl_8">
         {{ top.description }}

@@ -12,11 +12,11 @@
                 @openTarget="onOpenTarget($event)"></game-targets-row>
             </v-flex>
             <v-flex class="layout row" xs2 style="align-items: center;">
-              <v-btn fab dark ripple small color="primary"
+              <v-btn fab ripple small color="primary"
                 @click="onEditTarget(target, true)" v-if="target.edit !== true"><v-icon dark>create</v-icon></v-btn>
-              <v-btn fab dark ripple small color="primary"
+              <v-btn fab ripple small color="default"
                 @click="onEditTarget(target, false)" v-if="target.edit === true"><icon name="times"></icon></v-btn>
-              <v-btn fab dark ripple small color="error" @click="onDeleteTarget(target._id)"><v-icon dark>remove</v-icon></v-btn>
+              <v-btn fab ripple small color="error" @click="onDeleteTarget(target._id)"><v-icon dark>remove</v-icon></v-btn>
             </v-flex>
           </v-layout>
         </v-list-tile>

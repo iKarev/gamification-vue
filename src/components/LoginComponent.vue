@@ -36,8 +36,8 @@ export default {
       type: 'login',
       valid: false,
       user: {
-        email: 'ilya@qwe.ru',
-        password: '123'
+        email: '',
+        password: ''
       }
     }
   },
@@ -46,8 +46,9 @@ export default {
       this.type = this.type === 'login' ? 'register' : 'login'
     },
     onAuth () {
-      this.$store.dispatch(this.type, this.user)
-      this.$router.push({name: 'Calendar'})
+      this.$store.dispatch(this.type, this.user).then(() => {
+        this.$router.push({name: 'Calendar'})
+      })
     }
   }
 }

@@ -20,14 +20,22 @@
             <v-flex xs4 class="pr_8">
             </v-flex>
             <v-flex class="layout row" xs2 style="align-items: center;">
-              <v-btn v-if="type === 2" fab dark ripple small color="primary" @click="onSendRequest(user, 'request')">
+              <v-btn v-if="type === 1" fab dark ripple small color="default" v-on:click.stop.prevent="onSendRequest(user, 'removeCommon')">
+                <v-icon dark>close</v-icon>
+              </v-btn>
+              <v-btn v-else-if="type === 2" fab dark ripple small color="primary" v-on:click.stop.prevent="onSendRequest(user, 'request')">
                 <v-icon dark>add</v-icon>
               </v-btn>
-              <v-btn v-else-if="type === 3" fab dark ripple small color="success" @click="onSendRequest(user, 'accept')">
-                <v-icon dark>check</v-icon>
-              </v-btn>
-              <v-btn v-else-if="type === 4" fab dark ripple small color="danger" @click="onSendRequest(user, 'remove')">
-                <v-icon dark>remove</v-icon>
+              <div v-else-if="type === 3">
+                <v-btn fab dark ripple small color="success" v-on:click.stop.prevent="onSendRequest(user, 'accept')">
+                  <v-icon dark>check</v-icon>
+                </v-btn>
+                <v-btn fab dark ripple small color="danger" v-on:click.stop.prevent="onSendRequest(user, 'removeNew')">
+                  <v-icon dark>close</v-icon>
+                </v-btn>
+              </div>
+              <v-btn v-else-if="type === 4" fab dark ripple small color="danger" v-on:click.stop.prevent="onSendRequest(user, 'removeRequest')">
+                <v-icon dark>close</v-icon>
               </v-btn>
             </v-flex>
           </v-layout>

@@ -15,12 +15,25 @@
             <icon color="rgb(76, 175, 80)" scale="2" v-else-if="top.type === 4" name="birthday-cake"></icon>
           </div>
           <v-flex xs9>
-            <game-tops-editing :top="top" :index="i" v-if="top.edit === true || !top._id"></game-tops-editing>
-            <game-top-row :top="top" class="w_100 pt_11" v-if="top.edit !== true && top._id"></game-top-row>
+            <game-tops-editing :top="top" :index="i" v-if="top.edit === true || !top._id">
+            </game-tops-editing>
+            <game-top-row :top="top" class="w_100 pt_11" v-if="top.edit !== true && top._id"
+              :class="{'red--text': top.done === false, 'green--text': top.done === true}">
+            </game-top-row>
           </v-flex>
           <v-flex class="layout row" xs2 style="align-items: center;">
-            <v-btn fab dark ripple small color="primary" @click="onEditTop(top)"><v-icon dark>create</v-icon></v-btn>
-            <v-btn fab dark ripple small color="error" @click="onDeleteTop(top._id)"><v-icon dark>remove</v-icon></v-btn>
+            <div v-if="top._id">
+              <v-btn fab dark ripple small color="success"
+                @click="onMarkTopDone(top, true)"><icon name="check"></icon></v-btn>
+              <v-btn fab dark ripple small color="error"
+                @click="onMarkTopDone(top, false)"><icon name="times"></icon></v-btn>
+            </div>
+            <v-btn fab ripple small color="primary" v-if="top.edit !== true && top._id"
+              @click="onEditTop(top, true)"><v-icon dark>create</v-icon></v-btn>
+            <v-btn fab ripple small color="normal" v-if="top.edit === true && top._id"
+              @click="onEditTop(top, false)"><icon name="times"></icon></v-btn>
+            <!-- <v-btn fab dark ripple small color="error"
+              @click="onDeleteTop(top._id)"><v-icon dark>remove</v-icon></v-btn> -->
           </v-flex>
         </v-layout>
       </v-list-tile>
@@ -56,9 +69,13 @@ export default {
     onDeleteTop (topId) {
       this.$store.dispatch('deleteTop', topId)
     },
-    onEditTop (top) {
-      top.edit = true
-      this.$store.commit('changeTop', top._id, {edit: true})
+    onEditTop (top, type) {
+      top.edit = type
+      this.$store.commit('changeTop', top._id, {edit: type})
+    },
+    onMarkTopDone (top, done) {
+      top.done = done
+      this.$store.dispatch('updateTop', top)
     },
     doSmthg () {}
   },

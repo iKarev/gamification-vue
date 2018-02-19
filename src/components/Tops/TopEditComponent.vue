@@ -10,7 +10,7 @@
           style="margin-right: 8px;" required :rules="[v => !!v || 'Введите название']"></v-text-field>
       </v-flex>
       <v-flex xs12 md3 class="pl_8">
-        <v-select style="margin-right: 8px;"
+        <v-select style="margin-right: 8px;" :clearable="top.type !== 0 && top.type !== 3"
           v-bind:items="targets"
           v-model="top.target"
           item-text="name"
