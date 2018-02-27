@@ -29,12 +29,18 @@
           </v-layout>
         </v-list-tile>
       </v-list>
+      <v-layout>
+        <v-flex xs10>
+          <game-chart :name="'spider'" v-if="periodType === 4" :options="options"></game-chart>
+        </v-flex>
+      </v-layout>
     </v-container>
   </div>
 </template>
 
 
 <script>
+import Chart from '../Main/Highcharts/ChartComponent.vue'
 import doingsEditing from './DoingsEditingComponent.vue'
 import doingsRow from './DoingsRowComponent.vue'
 export default {
@@ -48,10 +54,12 @@ export default {
         description: '',
         type: 1
       },
+      doingPeriods: ['лет', 'месяцев', 'недель', 'дней'],
       doingPeriodNames: ['ежегодных', 'ежемесячных', 'еженедельных', 'ежедневных']
     }
   },
   components: {
+    'game-chart': Chart,
     'game-doings-editing': doingsEditing,
     'game-doings-row': doingsRow
   },
@@ -68,6 +76,46 @@ export default {
     doings () {
       this.$emit('onListDownloaded')
       return this.$store.getters.doings
+    },
+    options () {
+      const allPeriods = {
+        name: `Всего ${this.doingPeriods[this.periodType - 1]}`,
+        data: [],
+        pointPlacement: 'on'
+      }
+      const successPeriods = {
+        name: `Из них успешно`,
+        data: [],
+        pointPlacement: 'on'
+      }
+      const categories = []
+      this.doings.forEach((doing) => {
+        allPeriods.data.push(doing.implements.length)
+        successPeriods.data.push(doing.implements.filter((item) => item ? item.value : false).length)
+        categories.push(doing.name)
+      })
+      const options = {
+        title: {
+          text: `Статистика рутины ${this.doingPeriodNames[this.periodType - 1]} дел`,
+          x: -80
+        },
+        xAxis: {
+          categories,
+          tickmarkPlacement: 'on',
+          lineWidth: 0
+        },
+        series: [allPeriods, successPeriods]
+      }
+      return options
+    //   series: [{
+    //     name: 'Всего ${doingPeriods} внедрения',
+    //     data: [43000, 19000, 60000, 35000, 17000, 10000],
+    //     pointPlacement: 'on'
+    // }, {
+    //     name: 'Actual Spending',
+    //     data: [50000, 39000, 42000, 31000, 26000, 14000],
+    //     pointPlacement: 'on'
+    // }]
     }
   }
 }

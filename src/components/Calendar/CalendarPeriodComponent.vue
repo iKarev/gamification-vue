@@ -1,5 +1,5 @@
 <template>
-  <div @click="onOpenPeriod()">
+  <div @click="onOpenPeriod()" :style="{'background-color': color}">
     <div v-if="!monthChanges">
       <div class="m_0 weight_100 date absolute" v-if="period.periodType === 4">
         <span v-if="index < 7">{{weekDaysNames[date.weekDay]}}</span>
@@ -13,8 +13,8 @@
       </div>
     </div>
     <div class="layout justify-start" :class="{'row': period.periodType === 2, 'column': period.periodType !== 2}">
-      <div class="align-center flex xs12 layout m_0 topline" :class="{'md2': period.periodType === 2}"
-        v-for="(top, t) in period.tops" v-bind:key="t">
+      <div class="align-center flex xs12 layout m_0 topline" v-for="(top, t) in period.tops" v-bind:key="t"
+        :class="{'md2': period.periodType === 2, 'red--text': top.done === false, 'green--text': top.done === true}">
         <p class="mv_0 mr_4">
           <icon v-if="top.type === 0" name="crosshairs"></icon>
           <icon v-else-if="top.type === 1" name="exclamation-circle"></icon>
@@ -43,6 +43,13 @@ export default {
     }
   },
   computed: {
+    color () {
+      if (this.period.doings.done !== null) {
+        const result = parseInt(this.period.doings.done * 255 / this.period.doings.maxDone)
+        let color = `rgba(${255 - result}, ${result}, 0, .1)`
+        return color
+      }
+    },
     date () {
       if (this.period.periodType === 4) {
         const d = this.period.date

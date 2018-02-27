@@ -8,7 +8,13 @@ export default {
 
     const calendar = {
       days: {},
-      weeks: {}
+      weeks: {},
+      month: {
+        doings: {
+          maxDone: 0,
+          done: null
+        }
+      }
     }
 
     let count = 0
@@ -35,6 +41,27 @@ export default {
     for (const top of dayTops) { calendar.days[top.date].tops.push(top) }
     for (const top of weekTops) { calendar.weeks[top.date].tops.push(top) }
 
+    for (let doing of info.doings) {
+      let type
+      switch (doing.periodType) {
+        case 4: type = 'days'; break
+        case 3: type = 'weeks'; break
+        case 2: type = 'month'; break
+      }
+      for (let i of doing.implements) {
+        const val = i.value ? 1 : 0
+        if (doing.periodType > 2) {
+          const doings = calendar[type][i.date].doings
+          doings.maxDone++
+          doings.done = doings.done === null ? val : doings.done + val
+        } else {
+          const doings = calendar[type].doings
+          doings.maxDone++
+          doings.done = doings.done === null ? val : doings.done + val
+        }
+      }
+    }
+
     const daysArray = []
     for (const d in calendar.days) { daysArray.push(calendar.days[d]) }
     const weeksArray = []
@@ -43,13 +70,13 @@ export default {
     state.month = {
       days: daysArray,
       weeks: weeksArray,
-      info: {date: startDate, tops: monthTops, periodType: 2, dateString: setDateString(startDate)},
+      info: {date: startDate, doings: calendar.month.doings, tops: monthTops, periodType: 2, dateString: setDateString(startDate)},
       month: info.date.month,
       year: info.date.year
     }
     function addPeriod (period, periodType) {
       const dateString = setDateString(nextDate)
-      calendar[period][dateString] = {date: nextDate, tops: [], periodType, dateString}
+      calendar[period][dateString] = {date: nextDate, tops: [], periodType, dateString, doings: {maxDone: 0, done: null}}
     }
     function setDateString (date) {
       return `${date.getFullYear()}.${checkNumber(date.getMonth() + 1)}.${checkNumber(date.getDate())}`

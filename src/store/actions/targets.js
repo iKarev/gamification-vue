@@ -57,5 +57,12 @@ export default {
     axios.delete(`${url}/targets/${targetId}`).then((response) => {
       commit('deleteTarget', targetId)
     })
+  },
+
+  getTargetsStatistics ({ commit }, type) {
+    const params = {type}
+    axios.get(`${url}/targets/statistics`, {params}).then((response) => {
+      commit('setTargetStatistics', response.data)
+    })
   }
 }

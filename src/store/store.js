@@ -31,6 +31,7 @@ export const store = new Vuex.Store({
       name: null,
       _id: null
     },
+    statisticsTopsToTargets: null,
     activeTarget: {
       name: '',
       description: '',

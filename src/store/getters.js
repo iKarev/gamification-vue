@@ -14,6 +14,9 @@ export default {
   targets (state) {
     return state.targets
   },
+  statisticsTopsToTargets (state) {
+    return state.statisticsTopsToTargets
+  },
   activeTarget (state) {
     return state.activeTarget
   },

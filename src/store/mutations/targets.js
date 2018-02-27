@@ -23,5 +23,25 @@ export default {
   deleteTarget (state, targetId) {
     const targetIndex = state.targets.findIndex(t => t._id === targetId)
     state.targets.splice(targetIndex, 1)
+  },
+  setTargetStatistics (state, tops) {
+    const targets = {}
+    tops = tops.filter((item) => item.target._id)
+    tops.forEach((item) => {
+      if (targets[item.target._id]) {
+        targets[item.target._id].value++
+      } else {
+        targets[item.target._id] = {
+          value: 1,
+          name: item.target.name
+        }
+      }
+    })
+    const series = []
+    for (let i in targets) {
+      const item = targets[i]
+      series.push([item.name, item.value])
+    }
+    state.statisticsTopsToTargets = series
   }
 }

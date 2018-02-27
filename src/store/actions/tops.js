@@ -10,10 +10,12 @@ export default {
   },
   updateTop ({ commit }, top) {
     const data = [
-      {'propName': 'name', 'value': top.name},
-      {'propName': 'targetId', 'value': top.target._id},
-      {'propName': 'targetName', 'value': top.target.name}
+      {'propName': 'name', 'value': top.name}
     ]
+    if (top.target) {
+      data.push({'propName': 'targetId', 'value': top.target._id})
+      data.push({'propName': 'targetName', 'value': top.target.name})
+    }
     if (top.done !== undefined) {
       data.push({'propName': 'done', 'value': top.done})
     }

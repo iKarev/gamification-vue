@@ -36,11 +36,19 @@
         <game-targets-list class="white" @listShow="listDownloaded = $event" :parentTarget="mainTarget" :listDownloaded="listDownloaded"></game-targets-list>
       </v-expansion-panel-content>
     </v-expansion-panel>
-    </div>
+    <v-expansion-panel>
+      <v-expansion-panel-content class="blue-grey white--text" color="white">
+        <div slot="header">
+          <h4>Статистика</h4>
+        </div>
+        <game-targets-statistics class="white" :type="mainTarget.type"></game-targets-statistics>
+      </v-expansion-panel-content>
+    </v-expansion-panel>
   </v-card>
 </template>
 
 <script>
+import TargetsStatistics from './TargetsStatisticsComponent.vue'
 import TargetsEditing from './TargetsEditingComponent.vue'
 import TargetsRow from './TargetsRowComponent.vue'
 import TargetsList from './TargetsListComponent.vue'
@@ -48,6 +56,7 @@ import Refresh from '../Main/RefreshComponent.vue'
 export default {
   name: 'Targets',
   components: {
+    'game-targets-statistics': TargetsStatistics,
     'game-targets-editing': TargetsEditing,
     'game-targets-row': TargetsRow,
     'game-targets-list': TargetsList,

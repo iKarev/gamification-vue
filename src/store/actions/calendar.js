@@ -10,10 +10,24 @@ export default {
     }
     if (state.activeFriend._id) { params.friendId = state.activeFriend._id }
     axios.get(`${url}/tops`, {params}).then((res) => {
-      commit('setCalendarMonth', {date, tops: res.data})
+      tops = res.data
+      checkResponses()
     })
+    axios.get(`${url}/doings`, {params}).then((res) => {
+      doings = res.data.doings
+      checkResponses()
+    })
+    let tops = null
+    let doings = null
+    let count = 0
     function checkNumber (num) {
       return num < 10 ? `0${num}` : num
+    }
+    function checkResponses () {
+      count++
+      if (count === 2) {
+        commit('setCalendarMonth', {date, tops, doings})
+      }
     }
   }
 }

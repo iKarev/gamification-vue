@@ -13,6 +13,7 @@
   "dependencies": {
     "axios": "^0.17.1",
     "css-loader": "^0.28.9",
+    "highcharts": "^6.0.7",
     "vue": "^2.5.2",
     "vue-awesome": "^2.3.4",
     "vue-axios": "^2.0.2",
