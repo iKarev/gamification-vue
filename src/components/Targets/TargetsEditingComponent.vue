@@ -12,7 +12,7 @@
           <datepicker style="top: 18px;" ref="programaticOpen" placeholder="Крайний срок"
             v-model="target.deadline" @selected="onDateSelected($event)" :format="'dd.MM.yyyy'"></datepicker>
         </v-flex>
-        <v-flex xs2 class="justify-end layout row">
+        <v-flex xs2 style="min-width: 36px; margin: 0 auto;" class="justify-end layout row">
           <v-btn class="mt_16" @click="openPicker" flat icon color="indigo"><icon name="calendar"></icon></v-btn>
         </v-flex>
       </v-flex>

@@ -14,8 +14,8 @@
           v-bind:items="types"
           v-model="doing.type"
           item-text="name"
-          label="Определите тип"
-          required :rules="[v => (v !== undefined && v !== null) || 'Опредите тип дела']"></v-select>
+          label="Тип"
+          required :rules="[v => (v !== undefined && v !== null) || 'Определите тип']"></v-select>
       </v-flex>
       <v-flex xs5 class="pr_8">
         <v-text-field label="Описание" type="text" v-model="doing.description"></v-text-field>

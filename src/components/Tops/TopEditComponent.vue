@@ -15,7 +15,23 @@
           v-model="top.target"
           item-text="name"
           label="Выберите цель"
-          autocomplete></v-select>
+          autocomplete>
+          <template slot="item" slot-scope="data">
+            <template v-if="periodType !== '4' || data.item.type === 3">
+              <v-list-tile-content>
+                <v-list-tile-title v-html="data.item.name"></v-list-tile-title>
+                <!-- <v-list-tile-sub-title v-text="'Краткосрочная цель'"></v-list-tile-sub-title> -->
+              </v-list-tile-content>
+            </template>
+            <template v-else>
+              <v-list-tile-content class="layout row align-center">
+                <icon name="long-arrow-right" color="grey"></icon>
+                <v-list-tile-title v-html="data.item.name" class="ml-2"></v-list-tile-title>
+                <!-- <v-list-tile-sub-title v-text="'Ближайшая цель'"></v-list-tile-sub-title> -->
+              </v-list-tile-content>
+            </template>
+          </template>
+        </v-select>
       </v-flex>
       <v-flex xs8 md4 class="pl_8">
         <v-text-field label="Описание" type="text" v-model="top.description"></v-text-field>
@@ -30,7 +46,7 @@
 
 <script>
 export default {
-  props: ['top', 'index'],
+  props: ['top', 'index', 'targets'],
   name: 'TopEdit',
   data () {
     return {
@@ -39,14 +55,14 @@ export default {
     }
   },
   computed: {
-    targets () {
-      return this.$store.getters.targets
+    periodType () {
+      return this.$route.params.periodType
     }
   },
   methods: {
     onSaveTop () {
       if (this.$refs.topForm.validate()) {
-        this.top.periodType = this.$route.params.periodType
+        this.top.periodType = this.periodType
         this.top.date = this.$route.params.date
         if (this.top._id) {
           this.top.edit = false

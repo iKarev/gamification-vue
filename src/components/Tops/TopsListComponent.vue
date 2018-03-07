@@ -15,9 +15,9 @@
             <icon color="rgb(76, 175, 80)" scale="2" v-else-if="top.type === 4" name="birthday-cake"></icon>
           </div>
           <v-flex xs9>
-            <game-tops-editing :top="top" :index="i" v-if="top.edit === true || !top._id">
+            <game-tops-editing :top="top" :targets="targets" :index="i" v-if="top.edit === true || !top._id">
             </game-tops-editing>
-            <game-top-row :top="top" class="w_100 pt_11" v-if="top.edit !== true && top._id"
+            <game-top-row :top="top" class="w_100" v-if="top.edit !== true && top._id"
               :class="{'red--text': top.done === false, 'green--text': top.done === true}">
             </game-top-row>
           </v-flex>
@@ -82,6 +82,44 @@ export default {
   computed: {
     tops () {
       return this.$store.getters.tops
+    },
+    targets () {
+      if (this.$route.params.periodType === '4') {
+        const targets = {}
+        let storedTargets = this.$store.getters.targets.slice()
+        let i = 0
+        while (i < storedTargets.length) {
+          const item = storedTargets[i]
+          if (item.type === 3) {
+            targets[item._id] = {...item}
+            targets[item._id].children = []
+            storedTargets.splice(i, 1)
+          } else i++
+        }
+        storedTargets.forEach((item) => {
+          if (targets[item.parentTargetId]) {
+            targets[item.parentTargetId].children.push(item)
+          }
+        })
+        storedTargets = []
+        for (let i in targets) {
+          const target = targets[i]
+          storedTargets.push({ divider: true })
+          if (target.children.length) {
+            storedTargets.push(targets[i])
+            target.children.forEach((item) => {
+              storedTargets.push({...item})
+            })
+            delete target.children
+          } else {
+            storedTargets.push(target)
+            delete target.children
+          }
+        }
+        return storedTargets
+      } else {
+        return this.$store.getters.targets
+      }
     }
   },
   data () {

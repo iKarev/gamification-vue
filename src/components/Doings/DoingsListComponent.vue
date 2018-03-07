@@ -31,7 +31,8 @@
       </v-list>
       <v-layout>
         <v-flex xs10>
-          <game-chart :name="'spider'" v-if="periodType === 4" :options="options"></game-chart>
+          <game-chart v-if="options.xAxis.categories && options.xAxis.categories.length"
+            :name="'spider'" :options="options"></game-chart>
         </v-flex>
       </v-layout>
     </v-container>
@@ -90,9 +91,11 @@ export default {
       }
       const categories = []
       this.doings.forEach((doing) => {
-        allPeriods.data.push(doing.implements.length)
-        successPeriods.data.push(doing.implements.filter((item) => item ? item.value : false).length)
-        categories.push(doing.name)
+        if (doing.implements) {
+          allPeriods.data.push(doing.implements.length)
+          successPeriods.data.push(doing.implements.filter((item) => item ? item.value : false).length)
+          categories.push(doing.name)
+        }
       })
       const options = {
         title: {
@@ -107,15 +110,6 @@ export default {
         series: [allPeriods, successPeriods]
       }
       return options
-    //   series: [{
-    //     name: 'Всего ${doingPeriods} внедрения',
-    //     data: [43000, 19000, 60000, 35000, 17000, 10000],
-    //     pointPlacement: 'on'
-    // }, {
-    //     name: 'Actual Spending',
-    //     data: [50000, 39000, 42000, 31000, 26000, 14000],
-    //     pointPlacement: 'on'
-    // }]
     }
   }
 }

@@ -1,4 +1,7 @@
 export default {
+  setNotifications (state, data) {
+    state.notifications = data.notifications
+  },
   setUsersList (state, data) {
     const users = {
       all: [],

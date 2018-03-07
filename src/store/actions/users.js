@@ -2,6 +2,12 @@ import axios from 'axios'
 const url = 'http://127.0.0.1:3000'
 
 export default {
+  getNotifications ({ commit }) {
+    axios.get(`${url}/users/notifications`).then((response) => {
+      console.log(response)
+      commit('setNotifications', response.data)
+    })
+  },
   register ({ commit }, user) {
     return new Promise((resolve) => {
       axios.post(`${url}/users/signup`, user).then((response) => {

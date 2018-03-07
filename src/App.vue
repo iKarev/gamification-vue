@@ -3,6 +3,7 @@
     <v-toolbar dark color="primary">
       <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
       <v-toolbar-title class="white--text">10000 часов</v-toolbar-title>
+      <game-notifications></game-notifications>
       <v-spacer></v-spacer>
       <v-toolbar-title class="white--text">
         <span>{{ user.name || user.email }}</span>
@@ -42,8 +43,12 @@
 </template>
 
 <script>
+import Notifications from './components/Main/NotificationsComponent.vue'
 export default {
   name: 'app',
+  components: {
+    'game-notifications': Notifications
+  },
   data () {
     return {
       drawer: null,

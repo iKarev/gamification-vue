@@ -49,12 +49,10 @@ export default {
   },
   watch: {
     options (next, prev) {
-      console.log(next)
-      // this.drawChart()
+      this.drawChart()
     }
   },
   beforeDestroy () {
-    console.log(this.target)
     if (this.target) {
       this.target.destroy()
     }

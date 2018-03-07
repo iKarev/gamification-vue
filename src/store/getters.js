@@ -14,6 +14,9 @@ export default {
   targets (state) {
     return state.targets
   },
+  notifications (state) {
+    return state.notifications
+  },
   statisticsTopsToTargets (state) {
     return state.statisticsTopsToTargets
   },
